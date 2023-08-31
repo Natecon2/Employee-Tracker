@@ -20,13 +20,11 @@ const getAllRoles = async () => {
 };
 
 const addDepartment = async (departmentName) => {
-  const [result] = await pool.query('INSERT INTO department (name) VALUES (?)', [departmentName]);
-  return result;
+  // Implement the SQL query to add a department here
 };
 
-const addRole = async (title, salary, departmentId) => {
-  const [result] = await pool.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', [title, salary, departmentId]);
-  return result;
+const addRole = async (role) => {
+  // Implement the SQL query to add a role here
 };
 
 // Define other query functions for roles and employees
