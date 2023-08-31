@@ -3,8 +3,8 @@ const mysql = require('mysql2/promise');
 // Create a MySQL connection pool
 const pool = mysql.createPool({
   host: 'localhost',
-  user: 'your_username',
-  password: 'your_password',
+  user: 'root',
+  password: 'Lex!0802',
   database: 'employee_db'
 });
 
@@ -19,10 +19,22 @@ const getAllRoles = async () => {
   return rows;
 };
 
+const addDepartment = async (departmentName) => {
+  const [result] = await pool.query('INSERT INTO department (name) VALUES (?)', [departmentName]);
+  return result;
+};
+
+const addRole = async (title, salary, departmentId) => {
+  const [result] = await pool.query('INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)', [title, salary, departmentId]);
+  return result;
+};
+
 // Define other query functions for roles and employees
 
 module.exports = {
   getAllDepartments,
-  getAllRoles
+  getAllRoles,
+  addDepartment,
+  addRole
   // Export other query functions
 };

@@ -1,32 +1,62 @@
 const inquirer = require('inquirer');
-const db = require('./db');
+const db = require('./db'); // Replace with your actual db.js module
 
 // Main menu prompt and logic
 const mainMenu = () => {
   inquirer
     .prompt([
-      // ... (existing code)
-
-      // Add more choices for other functionalities
-      'Add a department',
-      'Add a role',
-      // ...
+      {
+        type: 'list',
+        name: 'action',
+        message: 'What would you like to do?',
+        choices: [
+          'View all departments',
+          'View all roles',
+          'Add a department',
+          'Add a role',
+          // Add more choices for other functionalities
+          'Exit',
+        ],
+      },
     ])
     .then((answer) => {
       switch (answer.action) {
-        // ...
-
+        case 'View all departments':
+          viewAllDepartments();
+          break;
+        case 'View all roles':
+          viewAllRoles();
+          break;
         case 'Add a department':
           addDepartment();
           break;
         case 'Add a role':
           addRole();
           break;
+        // ... Handle other choices
+        case 'Exit':
+          console.log('Exiting...');
+          process.exit(0);
+          break;
       }
     });
 };
 
-// ... (existing code)
+// Function to view all departments
+const viewAllDepartments = async () => {
+  const departments = await db.getAllDepartments(); // Implement this function in db.js
+  console.log('\n');
+  console.table(departments);
+  mainMenu();
+};
+
+// Function to view all roles
+const viewAllRoles = async () => {
+  const roles = await db.getAllRoles(); // Implement this function in db.js
+  console.log('\n');
+  console.table(roles);
+  mainMenu();
+};
 
 // Function to add a department
 const addDepartment = () => {
@@ -44,9 +74,9 @@ const addDepartment = () => {
         },
       },
     ])
-    .then(async (answer) => {
-      const departmentName = answer.departmentName;
-      await db.addDepartment(departmentName); // Implement the db.addDepartment function
+    .then(async (answers) => {
+      const departmentName = answers.departmentName;
+      await db.addDepartment(departmentName); // Implement this function in db.js
       console.log(`Department '${departmentName}' added successfully.`);
       mainMenu();
     });
@@ -54,7 +84,7 @@ const addDepartment = () => {
 
 // Function to add a role
 const addRole = async () => {
-  const departments = await db.getAllDepartments();
+  const departments = await db.getAllDepartments(); // Implement this function in db.js
   const departmentChoices = departments.map((department) => ({
     name: department.name,
     value: department.id,
@@ -98,13 +128,11 @@ const addRole = async () => {
         department_id: answers.departmentId,
       };
 
-      await db.addRole(role); // Implement the db.addRole function
+      await db.addRole(role); // Implement this function in db.js
       console.log(`Role '${role.title}' added successfully.`);
       mainMenu();
     });
 };
-
-// ... (existing code)
 
 // Start the application
 mainMenu();
