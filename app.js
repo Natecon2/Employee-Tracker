@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const db = require('./db'); // Replace with your actual db.js module
+const db = require('./db');
 
 // Main menu prompt and logic
 const mainMenu = () => {
@@ -14,7 +14,7 @@ const mainMenu = () => {
           'View all roles',
           'Add a department',
           'Add a role',
-          // Add more choices for other functionalities
+          // Add more choices for other functionalities in the future
           'Exit',
         ],
       },
@@ -33,7 +33,6 @@ const mainMenu = () => {
         case 'Add a role':
           addRole();
           break;
-        // ... Handle other choices
         case 'Exit':
           console.log('Exiting...');
           process.exit(0);
@@ -44,7 +43,7 @@ const mainMenu = () => {
 
 // Function to view all departments
 const viewAllDepartments = async () => {
-  const departments = await db.getAllDepartments(); // Implement this function in db.js
+  const departments = await db.getAllDepartments();
   console.log('\n');
   console.table(departments);
   mainMenu();
@@ -52,7 +51,7 @@ const viewAllDepartments = async () => {
 
 // Function to view all roles
 const viewAllRoles = async () => {
-  const roles = await db.getAllRoles(); // Implement this function in db.js
+  const roles = await db.getAllRoles();
   console.log('\n');
   console.table(roles);
   mainMenu();
@@ -76,7 +75,7 @@ const addDepartment = () => {
     ])
     .then(async (answers) => {
       const departmentName = answers.departmentName;
-      await db.addDepartment(departmentName); // Implement this function in db.js
+      await db.addDepartment(departmentName);
       console.log(`Department '${departmentName}' added successfully.`);
       mainMenu();
     });
@@ -84,7 +83,7 @@ const addDepartment = () => {
 
 // Function to add a role
 const addRole = async () => {
-  const departments = await db.getAllDepartments(); // Implement this function in db.js
+  const departments = await db.getAllDepartments();
   const departmentChoices = departments.map((department) => ({
     name: department.name,
     value: department.id,
@@ -128,7 +127,7 @@ const addRole = async () => {
         department_id: answers.departmentId,
       };
 
-      await db.addRole(role); // Implement this function in db.js
+      await db.addRole(role);
       console.log(`Role '${role.title}' added successfully.`);
       mainMenu();
     });
